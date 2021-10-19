@@ -1,8 +1,6 @@
 <?php
-    $pdo = new PDO('mysql:host=localhost;port=3307;dbname=birthdays', 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-
+    require_once 'ConnectToDatabase.php';
+    
     $thisMonth = $_GET['thisMonth'] ?? "";
     
     //var_dump($thisMonth);
@@ -29,21 +27,9 @@
     echo '<pre>';*/
 ?>
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Css -->
-    <link rel="stylesheet" href="app.css">
-    <!-- Bootstrap CDN Css -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
-    <title>Birthdays</title>
-  </head>
-  <body>
+<?php include_once "views/partials/header.php"?>
     <h1>Birthdays</h1>
-    <div style="display: inline-block;"> <a href="addBirthday.php" class="btn btn-success" > AddBirthday </a> </div>
+    <div style="display: inline-block;"> <a href="addBirthday.php" class="btn btn-success" > Add Birthday </a> </div>
 
     <form style="display: inline-block;"> 
         <input type="hidden" name="thisMonth" value="<?php echo date('m')?>">   
@@ -56,7 +42,6 @@
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Date</th>
-                <th scope="col">CreateDate</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -67,7 +52,7 @@
                 <td> <?php echo $birthday['name']?> </td>
                 <td> <?php echo $birthday['date']?> </td>
                 <td>
-                    <button type="button" class="btn btn-outline-success">Add</button>
+                    <a href="change.php?id=<?php echo $birthday['id']?>" type="button" class="btn btn-outline-success">Change</a>
                     <form style="display: inline-block" method="post" action="delete.php"> 
                         <input type="hidden" name="id" value="<?php echo $birthday['id']?>">   
                         <button type="submit" class="btn btn-outline-danger">Delete</button> 
